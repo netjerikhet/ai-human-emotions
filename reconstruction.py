@@ -5,7 +5,7 @@ from torch.utils.data import DataLoader
 from logger import Logger, Visualizer
 import numpy as np
 import imageio
-from sync_batchnorm import DataParallelWithCallback
+from batchnorm_sync import DataParallelWithCallback
 
 
 def reconstruction(config, generator, kp_detector, checkpoint, log_dir, dataset):
