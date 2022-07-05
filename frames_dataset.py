@@ -73,7 +73,7 @@ class FramesDataset(Dataset):
                  random_seed=0, pairs_list=None, augmentation_params=None):
         self.root_dir = root_dir
         self.videos = os.listdir(root_dir)
-        print("Number of videos in folder:", len(videos))
+        print("Number of videos in folder:", len(self.videos))
         self.frame_shape = tuple(frame_shape)
         self.pairs_list = pairs_list
         self.id_sampling = id_sampling
