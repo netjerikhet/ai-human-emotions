@@ -130,4 +130,8 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-
+/driving_videos
+/output_video
+/source_images
+/test model scripts.ipynb
+/vox-cpk.pth.tar
