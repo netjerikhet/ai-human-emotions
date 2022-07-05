@@ -51,6 +51,7 @@ def read_video(name, frame_shape):
         for frame in video:
             frame = detector.generate_cropped_face(faces, frame, save_picture=False)
             cropped_video.append(frame)
+            cropped_video = [skimage.transform.resize(frame, (256, 256)) for frame in cropped_video]
         if video.shape[-1] == 4:
             video = video[..., :3]
         video_array = img_as_float32(cropped_video)
@@ -72,6 +73,7 @@ class FramesDataset(Dataset):
                  random_seed=0, pairs_list=None, augmentation_params=None):
         self.root_dir = root_dir
         self.videos = os.listdir(root_dir)
+        print("Number of videos in folder:", len(videos))
         self.frame_shape = tuple(frame_shape)
         self.pairs_list = pairs_list
         self.id_sampling = id_sampling
