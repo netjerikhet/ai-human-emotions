@@ -8,6 +8,7 @@ import numpy as np
 from torch.utils.data import Dataset
 import pandas as pd
 from augmentation import AllAugmentationTransform
+from face_cropper import FaceCropper
 import glob
 
 def read_video(name, frame_shape):
@@ -17,7 +18,7 @@ def read_video(name, frame_shape):
       - '.mp4' and'.gif'
       - folder with videos
     """
-
+    detector = FaceCropper()
     if os.path.isdir(name):
         frames = sorted(os.listdir(name))
         num_frames = len(frames)
@@ -42,9 +43,14 @@ def read_video(name, frame_shape):
         video = np.array(mimread(name))
         if len(video.shape) == 3:
             video = np.array([gray2rgb(frame) for frame in video])
+        faces = detector.detect_face(video[0], show_result=False)
+        cropped_video = []
+        for frame in video:
+            frame = detector.generate_cropped_face(faces, frame, save_picture=False)
+            cropped_video.append(frame)
         if video.shape[-1] == 4:
             video = video[..., :3]
-        video_array = img_as_float32(video)
+        video_array = img_as_float32(cropped_video)
     else:
         raise Exception("Unknown file extensions  %s" % name)
 
