@@ -1,7 +1,7 @@
 # Class to detect face and crop it from the driving video and source image
 from google.colab.patches import cv2_imshow
 import numpy as np
-
+import cv2
 class FaceCropper(object):
 
     def __init__(self):

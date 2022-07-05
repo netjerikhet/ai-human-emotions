@@ -10,9 +10,9 @@ from shutil import copy
 
 from frames_dataset import FramesDataset
 
-from modules.generator import OcclusionAwareGenerator
-from modules.discriminator import MultiScaleDiscriminator
-from modules.keypoint_detector import KPDetector
+from model.generator import OcclusionAwareGenerator
+from model.discriminator import MultiScaleDiscriminator
+from model.keypoint_detector import KPDetector
 
 import torch
 
