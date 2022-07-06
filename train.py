@@ -20,11 +20,11 @@ def train(config, generator, discriminator, kp_detector, checkpoint, log_dir, da
     else:
         start_epoch = 0
     
-    schedular_generator = MultiStepLR(optimizer_generator, train_params['epoch_milestones'], gamma=0.1,
+    scheduler_generator = MultiStepLR(optimizer_generator, train_params['epoch_milestones'], gamma=0.1,
     last_epoch=start_epoch -1)
-    schedular_discriminator = MultiStepLR(optimizer_discriminator, train_params['epoch_milestones'], gamma=0.1,
+    scheduler_discriminator = MultiStepLR(optimizer_discriminator, train_params['epoch_milestones'], gamma=0.1,
     last_epoch=start_epoch - 1)
-    schedular_kp_detector = MultiStepLR(optimizer_kp_detector, train_params['epoch_milestones'], gamma=0.1,
+    scheduler_kp_detector = MultiStepLR(optimizer_kp_detector, train_params['epoch_milestones'], gamma=0.1,
     last_epoch=-1 + start_epoch * (train_params['lr_kp_detector'] != 0))
 
     if 'num_repeats' in train_params or train_params['num_repeats'] != 1:
@@ -68,13 +68,13 @@ def train(config, generator, discriminator, kp_detector, checkpoint, log_dir, da
                 losses = {key: value.mean().detach().data.cpu().numpy() for key, value in losses_generator.items()}
                 logger.log_iter(losses=losses)
 
-            scheduler_generator.step()
-            scheduler_discriminator.step()
-            scheduler_kp_detector.step()
-            
-            logger.log_epoch(epoch, {'generator': generator,
-                                        'discriminator': discriminator,
-                                        'kp_detector': kp_detector,
-                                        'optimizer_generator': optimizer_generator,
-                                        'optimizer_discriminator': optimizer_discriminator,
-                                        'optimizer_kp_detector': optimizer_kp_detector}, inp=x, out=generated)
+                scheduler_generator.step()
+                scheduler_discriminator.step()
+                scheduler_kp_detector.step()
+                
+                logger.log_epoch(epoch, {'generator': generator,
+                                            'discriminator': discriminator,
+                                            'kp_detector': kp_detector,
+                                            'optimizer_generator': optimizer_generator,
+                                            'optimizer_discriminator': optimizer_discriminator,
+                                            'optimizer_kp_detector': optimizer_kp_detector}, inp=x, out=generated)
