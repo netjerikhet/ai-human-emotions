@@ -1,0 +1,4 @@
+imageio==2.20.0
+Pillow==9.2.0
+scikit-image==0.19.3
+tqdm
